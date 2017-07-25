@@ -528,13 +528,5 @@ module.exports = function (grunt) {
     'build'
   ]);
   
-  grunt.registerTask('release', function() {
-            var releasevars = {
-                nexusrepogroup: grunt.option('nexus-repo-group') || 'snapshot'
-            };
-
-            grunt.task.run('compress');
-            grunt.task.run('nexusDeployer:' + releasevars.nexusrepogroup);
-        });
-
+ 
 };
