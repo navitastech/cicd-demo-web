@@ -30,6 +30,8 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+    pkg: grunt.file.readJSON('package.json'),
+      currentDate: grunt.template.today('yyyymmdd.HHMMss'),
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
