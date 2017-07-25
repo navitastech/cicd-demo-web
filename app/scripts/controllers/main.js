@@ -11,8 +11,10 @@ angular.module('appApp')
   .controller('MainCtrl', function ($scope, $http) {
   
   // $scope.apiData = "Hello World";
-   $http.get('/api/hello').success(function(data) {
-          $scope.apiData = data;
-        })
+ 
+   $http.get('/api/hello').
+        then(function(response) {
+            $scope.apiData = response.data;
+        });
 
   });
