@@ -416,6 +416,53 @@ module.exports = function (grunt) {
         'svgmin'
       ]
     },
+    
+    compress: {
+                main: {
+                    options: {
+                        archive: 'dist/demo-web-ui-<%= pkg.version %>.0-<%= currentDate %>.tar',
+                        mode: 'tar'
+                    },
+                    files: [{
+                        src: ['./dist/**'],
+                        expand: true
+                    }]
+                }
+            },
+            nexusDeployer: {
+                snapshot: {
+                    options: {
+                        groupId: 'com.navitas.demo.hello',
+                        artifactId: 'demo-web-ui',
+                        version: '<%= pkg.version %>.0-SNAPSHOT',
+                        packaging: 'tar',
+                        auth: {
+                            username: 'cicduser',
+                            password: 'admin123'
+                        },
+                        url: 'http://nexus.steadystatecd.com/repository/maven-snapshots/',
+                        artifact: 'dist/demo-web-ui-<%= pkg.version %>.0-<%= currentDate %>.tar',
+                        cwd: '/home/ec2-user/jenkins/data/workspace/web-build-on-commit/',
+                        insecure: true
+                    }
+                },
+                releaseCandidate: {
+                    options: {
+                        groupId: 'com.navitas.demo.hello',
+                        artifactId: 'demo-web-ui',
+                        version: '<%= pkg.version %>.0',
+                        packaging: 'tar',
+                        auth: {
+                            username: 'cicduser',
+                            password: 'admin123'
+                        },
+                        url: 'http://nexus.steadystatecd.com/repository/maven-releases/',
+                        artifact: 'dist/cts-web-ui-<%= pkg.version %>.0-<%= currentDate %>.tar',
+                        cwd: '/home/ec2-user/jenkins/data/workspace/web-build-on-commit/',
+                        insecure: true
+                    }
+                }
+            },
 
     // Test settings
     karma: {
@@ -480,4 +527,14 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  
+  grunt.registerTask('release', function() {
+            var releasevars = {
+                nexusrepogroup: grunt.option('nexus-repo-group') || 'snapshot'
+            };
+
+            grunt.task.run('compress');
+            grunt.task.run('nexusDeployer:' + releasevars.nexusrepogroup);
+        });
+
 };
