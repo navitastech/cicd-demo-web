@@ -443,7 +443,7 @@ module.exports = function (grunt) {
                             username: 'cicduser',
                             password: 'admin123'
                         },
-                        url: 'http://nexus.steadystatecd.com/repository/maven-snapshots/',
+                        url: 'http://nexus.steadystatecd.com/repository/maven-snapshots',
                         artifact: 'dist/demo-web-ui-<%= pkg.version %>.0-<%= currentDate %>.tar',
                         cwd: '/home/ec2-user/jenkins/data/workspace/web-build-on-commit/',
                         insecure: true
@@ -459,7 +459,7 @@ module.exports = function (grunt) {
                             username: 'cicduser',
                             password: 'admin123'
                         },
-                        url: 'http://nexus.steadystatecd.com/repository/maven-releases/',
+                        url: 'http://nexus.steadystatecd.com/repository/maven-releases',
                         artifact: 'dist/cts-web-ui-<%= pkg.version %>.0-<%= currentDate %>.tar',
                         cwd: '/home/ec2-user/jenkins/data/workspace/web-build-on-commit/',
                         insecure: true
